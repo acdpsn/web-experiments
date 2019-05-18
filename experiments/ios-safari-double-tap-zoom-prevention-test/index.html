@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Touch double-tap zoom test</title>
+		<style media="screen">
+			html, body {
+				color: #fff;
+				background-color: #000;
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			.center {
+				text-align: center;
+			}
+			.mid {
+				margin: 0px auto;
+			}
+			.redbg {
+				background-color: #a00;
+				display: inline-block;
+			}
+			.yellowbg {
+				color: #000;
+				background-color: #aa0;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Double-tap to zoom.</h1>
+		<div class="center redbg">
+			<p>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+				https://stackoverflow.com/a/39778831<br>
+			</p>
+		</div>
+		<div class="redbg" style="width: 100px; height: 100px;">
+		</div>
+		<br>
+		<div class="redbg mid" id="firstCounter">0</div>
+		<button onclick="incrementFirst()">plus one</button>
+		<br>
+		<hr>
+		<br>
+		<div id="noZoom">
+			<h1>No double-tap zoom!</h1>
+			<br>
+			<div class="center yellowbg">
+				<p>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+					https://stackoverflow.com/a/39778831<br>
+				</p>
+			</div>
+			<div class="yellowbg" style="width: 100px; height: 100px;"></div>
+			<br>
+			<div class="yellowbg mid" id="secondCounter">0</div>
+			<button onclick="incrementSecond()">plus one</button>
+		</div>
+		<script type="text/javascript">
+			var firstNum = 0;
+			var secondNum = 0;
+			function preventZoom(e) {
+				var t2 = e.timeStamp;
+				var t1 = e.currentTarget.dataset.lastTouch || t2;
+				var dt = t2 - t1;
+				var fingers = e.touches.length;
+				e.currentTarget.dataset.lastTouch = t2;
+
+				if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+				e.preventDefault();
+				e.target.click();
+			}
+			function incrementFirst() {
+				firstNum++;
+				document.getElementById("firstCounter").innerHTML = firstNum;
+			}
+			function incrementSecond() {
+				secondNum++;
+				document.getElementById("secondCounter").innerHTML = secondNum;
+			}
+			document.getElementById("noZoom").addEventListener('touchstart', preventZoom);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google" content="notranslate" />
+	<style>
+		.bubble {
+			padding: 30px;
+			max-width: 300px;
+			border: 1px solid #000;
+			border-radius: 30px;
+			-webkit-transition: all 1s cubic-bezier(0.77, 0, 0.175, 1);
+			transition: all 1s cubic-bezier(0.77, 0, 0.175, 1); /* https://easings.net/ */
+		}
+	</style>
+</head>
+<body>
+	<div class="bubble">
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus porro, minus sint quo ab nihil excepturi hic tempore quos rerum ullam, cupiditate architecto placeat, blanditiis reprehenderit est molestiae tempora distinctio.</p>
+	</div>
+	<div class="bubble">
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus necessitatibus, amet sed aspernatur assumenda error perferendis excepturi odit est dolorem laboriosam vel. Harum maiores necessitatibus doloremque blanditiis, praesentium repellat! Eos?</p>
+	</div>
+	<div class="bubble">
+		<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae, reiciendis porro! Quia alias quidem fuga odio eum? Iusto vel dolorem totam dolorum sint deserunt id, voluptatibus magnam! Doloribus, veritatis consequuntur?</p>
+	</div>
+	<script>
+		window.addEventListener("load", function() {
+			surroundWithBreak('bubble');
+			bubbleCorners();
+			setInterval(bubbleCorners, 1000);
+		});
+
+		function bubbleCorners() {
+			var radMin = 10;
+			var radMax = 50;
+			var padMin = 10;
+			var padMax = 30;
+			var marginPlusPadding = 30;
+
+			var bubbleElems = document.getElementsByClassName('bubble');
+			for (let x of bubbleElems) {
+				var newBubRad = "";
+				for (var i = 0; i < 4; i++) {
+					newBubRad += getRandomInt(radMin, radMax) + "px ";
+				}
+				newBubRad = newBubRad.trim();
+				x.style.borderRadius = newBubRad;
+
+				var newPadTop = getRandomInt(padMin, padMax);
+				var newPadBot = getRandomInt(padMin, padMax);
+				var newPadLef = getRandomInt(padMin, padMax);
+				var newPadRig = getRandomInt(padMin, padMax);
+				x.style.paddingTop = newPadTop + "px";
+				x.style.paddingBottom = newPadBot + "px";
+				x.style.paddingLeft = newPadLef + "px";
+				x.style.paddingRight = newPadRig + "px";
+				x.style.marginTop = (marginPlusPadding - newPadTop) + "px";
+				x.style.marginBottom = (marginPlusPadding - newPadBot) + "px";
+				x.style.marginLeft = (marginPlusPadding - newPadLef) + "px";
+				x.style.marginRight = (marginPlusPadding - newPadRig) + "px";
+			}
+		}
+
+		function surroundWithBreak(className) {
+			var classes = document.getElementsByClassName(className);
+			for (let x of classes) {
+				x.insertAdjacentHTML('beforebegin', '<br>');
+				x.insertAdjacentHTML('afterend', '<br>');
+			}
+		}
+
+		function getRandomInt(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min)) + min;
+		}
+	</script>
+</body>
+</html>

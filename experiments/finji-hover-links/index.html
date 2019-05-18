@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>finji hover links</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		fieldset {
+			border: 1px solid #000;
+		}
+		#finji a:link {
+			color: #000;
+			text-decoration: none;
+			transition: all .2s;
+		}
+		#finji a:hover,
+		#finji a:focus {
+			box-shadow: inset #f1b22b 0 -2px;
+		}
+		#custom1 a:link {
+			color: #000;
+			text-decoration: none;
+			transition: all .2s;
+			box-shadow: inset #f1b22b 0 -2px;
+		}
+		#custom1 a:hover,
+		#custom1 a:focus {
+			box-shadow: inset #f1b22b 0 -1em;
+		}
+		#custom2 a:link {
+			color: #000;
+			text-decoration: none;
+			transition: all .2s;
+		}
+		#custom2 a:hover,
+		#custom2 a:focus {
+			box-shadow: inset #f1b22b 0 -1em;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td id="finji">
+					<fieldset>
+						<legend>Finji hover links</legend>
+						<h2><a href="#">Link</a></h2>
+						<p>Lorem ipsum <a href="#">link</a> dolor sit amet</p>
+						<p><a href="#">Link</a></p>
+					</fieldset>
+			</td>
+		</tr>
+		<tr>
+			<td id="custom1">
+				<fieldset>
+					<legend>custom 1</legend>
+					<h2><a href="#">Link</a></h2>
+					<p>lorem ipsum <a href="#">link</a> dolor sit amet</p>
+					<p><a href="#">Link</a></p>
+				</fieldset>
+			</td>
+		</tr>
+		<tr>
+			<td id="custom2">
+				<fieldset>
+					<legend>custom 1</legend>
+					<h2><a href="#">Link</a></h2>
+					<p>lorem ipsum <a href="#">link</a> dolor sit amet</p>
+					<p><a href="#">Link</a></p>
+				</fieldset>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

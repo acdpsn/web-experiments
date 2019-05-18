@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="google" content="notranslate" />
+	<style>
+		input {
+			display: none;
+		}
+		.box {
+			padding: 5px;
+			margin: 5px;
+			border: 1px solid #000;
+		}
+		.button {
+			color: #00f;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		.content {
+			width: calc(100% - 40px);
+			max-width: 900px;
+			height: calc(100% - 40px);
+			padding: 20px;
+		}
+		.tmid { /* Center block-level elements */
+			margin: 0px auto;
+		}
+		#link-1:not(:checked) ~ #link-1-box {
+			display: none;
+		}
+		#link-2:not(:checked) ~ #link-2-box {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="content tmid">
+		<input id="link-1" name="links" type="radio" checked>
+		<input id="link-2" name="links" type="radio">
+	
+		<label class="button" for="link-1">Link 1</label>
+		<label class="button" for="link-2">Link 2</label>
+	
+		<div class="box" id="link-1-box">
+			<h3>Link 1</h3>
+			<p>The <code>&lt;label&gt;</code> tag can be used as links for radio buttons by attaching a <code>for</code> attribute.</p>
+			<p>You can detect if a radio button is checked with css by using a <code>:checked</code> selector. Similarly, you can use <code>:not(:checked) to detect when a radio button is not checked.</code></p>
+			<p>The <code>~</code> selector can combine the radio button and a separate div on the page so that the div can be hidden when the button is checked, etc.</p>
+			<p>Including <code>checked</code> as an attribute for an input radio button tag loads the page with that radio button checked.</p>
+		</div>
+		<div class="box" id="link-2-box">
+			<h3>Link 2</h3>
+			<p>Hello world! This is another text box.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam, eligendi. Officiis atque rem praesentium, quos nulla repellat dolorem nihil? Voluptatum nesciunt labore porro distinctio, esse iusto voluptas. Quisquam, quae dignissimos?</p>
+		</div>
+		<p>Source: <a href="https://git.neon.moe/neon/neon.moe/src/commit/4a7820510a2c66768f92763940a7e1a6d53cbe11/index.css">neon.moe</a></p></div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+		<style media="screen">
+			html, body {
+				color: #fff;
+				background-color: #000;
+				font-family: 'Abril Fatface', cursive;
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			h1 {
+				font-size: 10vw;
+			}
+			a:link, a:visited {
+				color: #f00;
+				text-decoration: none;
+			}
+			a:active, a:hover {
+				text-decoration: underline;
+			}
+			hr {
+				background-color: #fff;
+				height: 5px;
+				border: none;
+			}
+			iframe {
+				/* Remove white space under div */
+				display: block;
+			}
+			.center {
+				text-align: center;
+			}
+			.tmid { /* Center block-level elements */
+				margin: 0px auto;
+			}
+			.fullpage {
+				width: 100%;
+				height: 100%;
+			}
+			.vcenter {
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			.button {
+				padding: 10px;
+				margin: 20px;
+				border: 5px solid #fff;
+				display: inline-block;
+				cursor: pointer;
+			}
+			.button:hover {
+				color: #f00;
+				border: 5px solid #f00;
+			}
+			.overlay {
+				background-color: #000;
+				position: absolute;
+				top: 0;
+				right: 0;
+				mix-blend-mode: multiply;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="fullpage">
+			<div id="player"></div>
+		</div>
+		<div class="fullpage overlay">
+			<div class="center vcenter">
+				<hr>
+				<h1>NOW PLAYING</h1>
+				<hr>
+				<div class="button" id="resume">
+					<h2>RESUME</h2>
+				</div>
+				<div class="button" id="pause">
+					<h2>PAUSE</h2>
+				</div>
+			</div>
+		</div>
+		<h2>CSS Blend Mode Test</h2>
+		<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode">mix-blend-mode</a></p>
+		<p>also, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-blend-mode">background-blend-mode</a></p>
+		<script type="text/javascript">
+			// https://developers.google.com/youtube/iframe_api_reference
+			var tag = document.createElement('script');
+
+			tag.src = "https://www.youtube.com/iframe_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+			var player;
+			function onYouTubeIframeAPIReady() {
+				player = new YT.Player('player', {
+					height: '100%',
+					width: '100%',
+					videoId: 'YppqVG0nZvY',
+					playerVars: { // https://developers.google.com/youtube/player_parameters?playerVersion=HTML5
+						'autoplay': 1,
+						'controls': 0,
+						'fs': 0,
+						'loop': 1,
+						'modestbranding': 1,
+						'playsinline': 1,
+						'showinfo': 0,
+						'start': 3
+					}
+				});
+			}
+
+			document.getElementById('resume').onclick = function() {
+				player.playVideo();
+			};
+			document.getElementById('pause').onclick = function() {
+				player.pauseVideo();
+			};
+		</script>
+	</body>
+</html>

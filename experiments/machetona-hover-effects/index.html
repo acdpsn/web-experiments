@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>machetona hover effects</title>
+		<style type="text/css">
+			body {
+				color: #fff;
+				background-color: #000;
+			}
+			h1 {
+				margin: 0;
+				display: inline-block;
+			}
+			a:link, a:visited {
+				color: #fff;
+				text-decoration: none;
+			}
+			a:active, a:hover {
+			}
+			.one a:link, .one a:visited {
+				text-shadow: 10px 0 rgba(0,0,0,0), -10px 0 rgba(0,0,0,0);
+				-webkit-transition: text-shadow .2s;
+				transition: text-shadow .2s;
+			}
+			.one a:active, .one a:hover {
+				text-shadow: 0 0 #fff, 0px 0 #fff;
+			}
+			.two a:link, .two a:visited {
+				text-shadow: 10px 10px rgba(0,0,0,0), -10px 10px rgba(0,0,0,0), 10px -10px rgba(0,0,0,0), -10px -10px rgba(0,0,0,0);
+				-webkit-transition: text-shadow .2s;
+				transition: text-shadow .2s;
+			}
+			.two a:active, .two a:hover {
+				text-shadow: 0 0 #fff, 0px 0 #fff, 0px 0 #fff, 0px 0 #fff;
+			}
+			.three a:link, .three a:visited {
+				text-shadow: 0 15px rgba(0,0,0,0);
+				-webkit-transition: text-shadow .2s;
+				transition: text-shadow .2s;
+			}
+			.three a:active, .three a:hover {
+				text-shadow: 0 0 #fff;
+			}
+			.four a:link, .four a:visited {
+				text-shadow: 10px 0 rgba(0,0,0,0), -10px 0 rgba(0,0,0,0);
+			}
+			.four a:active, .four a:hover {
+				text-shadow: 0 0 #fff, 0px 0 #fff;
+				-webkit-transition: text-shadow .2s;
+				transition: text-shadow .2s;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="one">
+			<a href="http://machetona.neocities.org/"><h1>♥</h1> &nbsp; &nbsp; <a href="http://machetona.neocities.org/"><h1>Machetona</h1></a></a>
+		</div>
+		<div class="two">
+			<a href="http://machetona.neocities.org/"><h1>♥</h1> &nbsp; &nbsp; <a href="http://machetona.neocities.org/"><h1>Machetona</h1></a></a>
+		</div>
+		<div class="three">
+			<a href="http://machetona.neocities.org/"><h1>♥</h1> &nbsp; &nbsp; <a href="http://machetona.neocities.org/"><h1>Machetona</h1></a></a>
+		</div>
+		<div class="four">
+			<a href="http://machetona.neocities.org/"><h1>♥</h1> &nbsp; &nbsp; <a href="http://machetona.neocities.org/"><h1>Machetona</h1></a></a>
+		</div>
+		<p>
+			<span class="one"><a href="#">My</a></span> <span class="two"><a href="#">breakfast</a></span> <span class="three"><a href="#">spaghetti</a></span> <span class="four"><a href="#">yarn</a></span> eats owners hair then claws head eats owners hair then claws head.
+		</p>
+		<script type="text/javascript">
+			document.addEventListener("touchstart", function() {},false); // Hover effects on iOS.
+		</script>
+	</body>
+</html>

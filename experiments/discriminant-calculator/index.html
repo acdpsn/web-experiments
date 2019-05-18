@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+	<h1>Discriminant Calculator</h1>
+	<p>
+		ax&sup2; + bx + c = 0<br>
+		a = <input type="text" id="ina" oninput="solve()"><br>
+		b = <input type="text" id="inb" oninput="solve()"><br>
+		c = <input type="text" id="inc" oninput="solve()"><br>
+	</p>
+	<p id="ans"></p>
+	<script>
+    	solve()
+		function solve() {
+			var ans = document.getElementById("ans");
+			var ina = parseFloat(document.getElementById("ina").value);
+			var inb = parseFloat(document.getElementById("inb").value);
+			var inc = parseFloat(document.getElementById("inc").value);
+		    ans.innerHTML = Math.pow(inb,2)-(4*ina*inc) + "<br>";
+		    if (Math.pow(inb,2)-(4*ina*inc) < 0) {
+            	ans.innerHTML += " 2 complex (non-real) solutions";
+            }
+		    else if (Math.pow(inb,2)-(4*ina*inc) === 0) {
+            	ans.innerHTML += " one real solution";
+            }
+            else {
+            	ans.innerHTML += " two real solutions";
+            }
+		}
+	</script>
+</body>
+
+</html>

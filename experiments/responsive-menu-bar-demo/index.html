@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Responsive Menu Bar Demo</title>
+		<style media="screen">
+			html, body {
+				background-color: #7a0c13;
+				color: #fff;
+				font-family: Verdana, Geneva, sans-serif;
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			a {
+				color: #fff;
+			}
+			.center {
+				text-align: center;
+			}
+			.tmid { /* center block-level elements */
+				margin: 0px auto;
+			}
+			.content {
+				width: 100%;
+				max-width: 900px;
+			}
+
+			.menubar {
+				background-color: #000;
+				width: 100%;
+				position: fixed;
+				top: 0;
+				right: 0;
+			}
+			.menubarcontent {
+				background-color: #000;
+				width: 100%;
+				max-width: 900px;
+				overflow: hidden;
+				-webkit-transition: height .4s;
+				transition: height .4s;
+			}
+			.menubarcontent a {
+				text-decoration: none;
+			}
+			.menubaritem {
+				background: #000;
+				padding: 15px;
+				display: inline-block;
+				z-index: 1000;
+			}
+			.menubaritem:hover {
+				background: #363636; /* For browsers without gradient support */
+				background: linear-gradient(0deg, #000, #555);
+			}
+			.menubaritem h3 {
+				margin: 0;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			#menubartoggle {
+				display: none;
+				cursor: pointer;
+			}
+			#menubarclosetext {
+				opacity: 0;
+				-webkit-transition: opacity .35s;
+				transition: opacity .35s;
+			}
+			#menubarshadow {
+				background-color: #fff;
+				width: 100%;
+				max-width: 900px;
+				position: absolute;
+				-webkit-transition: height .25s;
+				transition: height .25s;
+			}
+			#menubarspacer {
+				background-color: #f0f;
+				width: 100%;
+				height: 52px;
+			}
+			@media (max-width: 500px) {
+				.menubaritem {
+					display: block;
+					text-align: right;
+				}
+				.menubaritem:hover {
+					background: linear-gradient(90deg, #000, #555);
+				}
+				#menubartoggle {
+					display: block;
+				}
+			}
+			
+			
+			.innercontent {
+				background-color: rgba(0, 0, 0, 0.5);
+				width: calc(100% - 100px);
+				padding: 25px;
+				margin: 25px;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content tmid">
+			<div id="menubarshadow"></div>
+			<div class="menubar">
+				<div class="menubarcontent tmid" id="menubarcontent">
+					<div class="menubaritem" id="menubartoggle">
+						<h3><span id="menubarclosetext">Close </span>Menu</h3>
+					</div>
+					<a href="#">
+						<div class="menubaritem">
+							<h3>Item 1</h3>
+						</div>
+					</a>
+					<a href="#">
+						<div class="menubaritem">
+							<h3>Item 2</h3>
+						</div>
+					</a>
+					<a href="#">
+						<div class="menubaritem">
+							<h3>Item 3</h3>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div id="menubarspacer"></div>
+			<div class="innercontent">
+				<h1 class="center">Responsive Menu Bar Demo</h1>
+				<p>
+					Made with pure HTML, JavaScript, and CSS. Tested in Chrome, Firefox, and mobile Safari.
+				</p>
+				<p>
+					I mostly made this to test the effect of the menu bar shadow. You have to view this page on a screen or window with a width of 500 pixels or less to see it!
+				</p>
+				<p>
+					One day when I was browsing the internet, I noticed that a website had a menu bar with a bit of an error. When the menu bar was extending or retracting, I noticed that an empty scroll bar appeared at the bottom of the menu. It reminded me of how reloading gunboots look in Downwell.
+				</p>
+				<img src="http://downwellgame.com/images/screenshots/animated3-feb.gif" class="tmid" style="border-radius: 5px; max-width: 100%; display: block;">
+				<p>
+					I wanted to try intentionally adding it to a menu bar to give it a neat effect. It turned out to look quite nice!
+				</p>
+				<p>
+					Also, I needed to remake the menu bar I had designed years earlier.
+				</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+			window.onload = function(e) {
+				if (window.innerWidth <= 500) {
+					var menuBarClosedHeight = document.getElementById('menubartoggle').clientHeight + "px";
+					document.getElementById('menubarcontent').style.height = menuBarClosedHeight;
+					document.getElementById('menubarshadow').style.height = menuBarClosedHeight;
+				}
+				document.getElementById('menubartoggle').addEventListener('click', toggleMenuBar);
+			}
+
+			window.onresize = function(event) {
+				var menuBarElement = document.getElementById('menubarcontent');
+				var menuBarCloseText = document.getElementById('menubarclosetext');
+				var menuBarShadowElement = document.getElementById('menubarshadow');
+				var menuBarClosedHeight = document.getElementById('menubartoggle').clientHeight + "px";
+				var menuBarOpenHeight = (document.getElementById('menubartoggle').clientHeight * document.querySelectorAll('.menubaritem').length) + "px";
+				if (window.innerWidth <= 500 && menuBarElement.style.height != menuBarClosedHeight && menuBarElement.style.height != menuBarOpenHeight) {
+					menuBarElement.style.height = menuBarClosedHeight;
+					menuBarShadowElement.style.height = menuBarClosedHeight;
+				}
+				else if (window.innerWidth > 500) {
+					menuBarElement.style.height = "";
+					menuBarShadowElement.style.height = "";
+					menuBarCloseText.style.opacity = 0;
+				}
+			}
+
+			function toggleMenuBar() {
+				var menuBarElement = document.getElementById('menubarcontent');
+				var menuBarCloseText = document.getElementById('menubarclosetext');
+				var menuBarShadowElement = document.getElementById('menubarshadow');
+				var menuBarClosedHeight = document.getElementById('menubartoggle').clientHeight + "px";
+				var menuBarOpenHeight = (document.getElementById('menubartoggle').clientHeight * document.querySelectorAll('.menubaritem').length) + "px";
+				if (menuBarElement.style.height == menuBarClosedHeight) {
+					menuBarElement.style.height = menuBarOpenHeight;
+					menuBarCloseText.style.opacity = 100;
+					menuBarShadowElement.style.height = menuBarOpenHeight;
+				}
+				else if (menuBarElement.style.height == menuBarOpenHeight){
+					menuBarElement.style.height = menuBarClosedHeight;
+					menuBarCloseText.style.opacity = 0;
+					menuBarShadowElement.style.height = menuBarClosedHeight;
+				}
+			}
+		</script>
+	</body>
+</html>
+
+<!-- Notes
+
+https://stackoverflow.com/questions/4106538/difference-between-offsetheight-and-clientheight
+
+-->
