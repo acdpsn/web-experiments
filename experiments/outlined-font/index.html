@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>CSS Font Outlines</title>
+
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+
+	<style>
+		html, body {
+			color: #fff;
+			background-color: #000;
+			font-family: Arial, Helvetica, sans-serif;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		.center {
+			text-align: center;
+		}
+		.tmid { /* Center block-level elements */
+			margin: 0px auto;
+		}
+		.vcenter {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		.content {
+			width: calc(100% - 100px);
+			max-width: 900px;
+			padding: 25px 50px;
+		}
+		.fullpage {
+			width: 100%;
+			height: 100%;
+		}
+
+
+
+		.outline {
+			color: transparent;
+			-webkit-text-stroke: 2px #fff;
+			paint-order: stroke fill;
+		}
+
+
+
+		img {
+			position: relative;
+		}
+		.f {
+			position: fixed;
+			top: 0;
+			right: 0;
+		}
+		.massive {
+			font-size: 16vw;
+		}
+		.top-layer {
+			z-index: 200;
+		}
+		.mid-layer {
+			z-index: 100;
+		}
+		.m0 {
+			margin: 0;
+		}
+		.scroll-down {
+			position: relative;
+			top: 80%;
+			transform: translateY(-80%);
+		}
+		.earth {
+			width: calc(100% - 4px);
+			border: 2px solid #fff;
+			border-radius: 4px;
+		}
+		.left {
+			width: calc(60% - 4px);
+			margin-right: 40%;
+		}
+		.right {
+			width: calc(60% - 4px);
+			margin-left: 40%;
+		}
+		.ib {
+			display: inline-block;
+		}
+		.al {
+			text-align: left;
+		}
+		.spacer {
+			height: 50px;
+		}
+		.halfpage {
+			width: 100%;
+			height: 50%;
+		}
+	</style>
+</head>
+<body>
+	<div class="fullpage f top-layer">
+		<p class="massive outline center vcenter m0">Hello World</p>
+	</div>
+	<div class="fullpage f">
+		<p class="massive center vcenter m0">Hello World</p>
+	</div>
+
+	<div class="fullpage center">
+		<div class="scroll-down">
+			<p>Scroll down</p>
+			<img src="https://icon.now.sh/arrow_downward/32/fff">
+		</div>
+	</div>
+	<div class="content tmid center mid-layer">
+		<img class="earth" src="https://source.unsplash.com/yZygONrUBe8">
+		<div class="spacer"></div>
+		<img class="earth right" src="https://source.unsplash.com/cIX5TlQ_FgM">
+		<div class="spacer"></div>
+		<img class="earth left" src="https://source.unsplash.com/YBA7T5yhVxo">
+	</div>
+	<div class="halfpage">
+		<div class="vcenter center">
+			<div class="ib al">
+				<p>
+					<pre>
+.outline {
+    color: transparent;
+    -webkit-text-stroke: 2px #fff;
+    paint-order: stroke fill;
+}
+					</pre>
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
