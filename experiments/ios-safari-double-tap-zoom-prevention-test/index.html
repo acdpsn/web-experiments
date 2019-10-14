@@ -28,24 +28,27 @@
 				background-color: #aa0;
 				display: inline-block;
 			}
+			#noZoomTouchAction {
+				touch-action: manipulation;
+			}
 		</style>
 	</head>
 	<body>
 		<h1>Double-tap to zoom.</h1>
 		<div class="center redbg">
 			<p>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
-				https://stackoverflow.com/a/39778831<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
+				Hello world! Lorem ipsum dolor sit amet<br>
 			</p>
 		</div>
 		<div class="redbg" style="width: 100px; height: 100px;">
@@ -57,22 +60,23 @@
 		<hr>
 		<br>
 		<div id="noZoom">
-			<h1>No double-tap zoom!</h1>
+			<h1>No double-tap zoom using js!</h1>
 			<br>
 			<div class="center yellowbg">
 				<p>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
-					https://stackoverflow.com/a/39778831<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					<br>
+					<a href="https://stackoverflow.com/a/39778831">https://stackoverflow.com/a/39778831</a><br>
 				</p>
 			</div>
 			<div class="yellowbg" style="width: 100px; height: 100px;"></div>
@@ -80,9 +84,35 @@
 			<div class="yellowbg mid" id="secondCounter">0</div>
 			<button onclick="incrementSecond()">plus one</button>
 		</div>
+		<div id="noZoomTouchAction">
+			<h1>No double-tap zoom using css!</h1>
+			<br>
+			<div class="center yellowbg">
+				<p>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					Hello world! Lorem ipsum dolor sit amet<br>
+					<br>
+					<code><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action#manipulation">touch-action: manipulation;</a></code><br>
+				</p>
+			</div>
+			<div class="yellowbg" style="width: 100px; height: 100px;"></div>
+			<br>
+			<div class="yellowbg mid" id="thirdCounter">0</div>
+			<button onclick="incrementThird()">plus one</button>
+		</div>
 		<script type="text/javascript">
 			var firstNum = 0;
 			var secondNum = 0;
+			var thirdNum = 0;
 			function preventZoom(e) {
 				var t2 = e.timeStamp;
 				var t1 = e.currentTarget.dataset.lastTouch || t2;
@@ -102,6 +132,10 @@
 			function incrementSecond() {
 				secondNum++;
 				document.getElementById("secondCounter").innerHTML = secondNum;
+			}
+			function incrementThird() {
+				thirdNum++;
+				document.getElementById("thirdCounter").innerHTML = thirdNum;
 			}
 			document.getElementById("noZoom").addEventListener('touchstart', preventZoom);
 		</script>
