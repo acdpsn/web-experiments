@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>horizontal underline animated link</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono&display=swap" rel="stylesheet"> 
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+        }
+        a {
+            text-decoration: none;
+            color: #a3a3a3;
+
+            width: 100%;
+            background-image: linear-gradient(transparent calc(100% - 5px), #fce803 5px);
+            background-repeat: no-repeat;
+            background-size: 0 100%;
+            -webkit-transition: background-size .5s ease-in-out;
+            transition: background-size .5s ease-in-out;
+            display: inline;
+        }
+        a:hover {
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <p><a href="#">The quick brown fox jumps over the lazy dog</a></p>
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos distinctio ullam dolorum hic nesciunt voluptates explicabo ducimus temporibus odit voluptas repellat nulla, <a href="#">nobis eveniet ad?</a> Repellat debitis modi at fuga.</p>
+
+    <p>Effect taken from the <a href="https://www.cyberpunk.net/en/news/31252/so-what-does-night-city-sound-like">Cyberpunk 2077 website</a>. There are tons of other slick effects on there.</p>
+</body>
+
+</html>
