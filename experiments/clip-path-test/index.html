@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>clip-path test</title>
+
+	<style media="screen">
+		body {
+			color: #fff;
+			font-family: Arial, Helvetica, sans-serif;
+			background-color: #000;
+		}
+		a:link, a:active, a:visited {
+			color: #ff0;
+		}
+		a:hover {
+			color: #f80;
+		}
+		.contents {
+			position: relative;
+			z-index: 10;
+			text-shadow: 1px 1px #000, 2px 1px #000;
+		}
+		#clip {
+			background: url(aranprime-KbytCpI1i5I-unsplash.jpg) no-repeat center center fixed;
+			background-size: cover;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="clip"></div>
+	<div class="contents">
+		<h1>clip-path test</h1>
+		<p>move the mouse or touch the screen to shine your flashlight around the room</p>
+		<p>effect seen at <a href="https://www.paperhousegames.com/">the paper house website</a></p>
+		<p>MDN: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path">clip path</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/clipPath">&lt;clipPath&gt;</a>
+	</div>
+	<script>
+		(function() {
+			let clip = document.getElementById('clip');
+			clip.style.zIndex = 0;
+			clip.style.clipPath = `circle(0)`;
+			addEventListener("touchmove", (e) => update(e));
+			addEventListener("mousemove", (e) => update(e));
+
+			// update position of circle based on mouse/touch position
+			function update(e) {
+			console.log(e)
+				let x, y;
+				if (event.changedTouches) {
+					x = (e.changedTouches[0].clientX / window.innerWidth) * 100;
+					y = (e.changedTouches[0].clientY / window.innerHeight) * 100;
+				} else {
+					x = e.clientX / window.innerWidth * 100;
+					y = e.clientY / window.innerHeight * 100;
+				}
+				clip.style.clipPath = `circle(10vh at ${ x }% ${ y }%)`;
+			}
+		})();
+	</script>
+</body>
+</html>
