@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Feed Stick to Bottom</title>
+	<style>
+		html, body {
+			font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+			height: 100%;
+			margin: 0;
+		}
+
+		#feed-container {
+			width: calc(100% - 8px);
+			height: calc(100% - 54px);
+			padding-top: 4px;
+			margin: 0 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		#feed-list {
+			width: 100%;
+			max-width: 500px;
+			height: 100%;
+			border: 1px solid #000;
+			overflow-y: scroll;
+			box-sizing: border-box;
+			
+			scroll-snap-type: y proximity;
+			align-content: end;
+		}
+		#feed-list::after {
+			height: 1px; /* firefox requires a height */
+			display: block;
+			content: "";
+			scroll-snap-align: end;
+		}
+		#message {
+			padding: 8px;
+			margin: 12px;
+			border: 1px solid #000;
+			border-radius: 8px;
+		}
+		#create-message-container {
+			height: 50px;
+			margin: 0 4px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		#create-message-input {
+			font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+			font-size: 16px;
+			width: calc(100% - 64px);
+			max-width: calc(500px - 64px);
+			height: 42px;
+			padding: 8px;
+			display: block;
+			border: 1px solid #000;
+			box-sizing: border-box;
+			flex-shrink: 0;
+		}
+		#create-message-input::placeholder {
+			font-style: italic;
+		}
+		#create-message-send {
+			width: 60px;
+			height: 42px;
+			padding: 0;
+			margin-left: 4px;
+			border: 1px solid #000;
+			flex-shrink: 0;
+		}
+
+		@keyframes highlight {
+			from {
+				background-color: #ff0;
+			}
+			to {
+				background-color: transparent;
+			}
+		}
+		.highlight {
+			animation-name: highlight;
+			animation-duration: 2s;
+			animation-iteration-count: 1;
+		}
+	</style>
+</head>
+<body>
+	<div id="feed-container">
+		<div id="feed-list">
+			<template id="message-template">
+				<div id="message">
+				</div>
+			</template>
+		</div>
+	</div>
+	<div id="create-message-container">
+		<input type="text" id="create-message-input" onkeydown="inputKeyDown(this)" placeholder="New message...">
+		<button id="create-message-send" onclick="sendMessage()">Send</button>
+	</div>
+
+	<script>
+		var feed = document.querySelector("#feed-list");
+		var lorem = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda repellat sapiente vel corrupti minus porro voluptatum atque quidem consectetur, maxime veniam sint iusto beatae nam, voluptatem debitis. Vitae, alias ab!";
+
+		for (var i = 0; i < 100; i++) {
+			createMessage(lorem);
+		}
+		createMessage("created 100 messages");
+		
+		createMessage("cool solution from Bramus", false, "https://front-end.social/@bramus/112990110232760267");
+
+		// scroll to bottom of feed
+		feed.scrollTo(0, feed.scrollHeight);
+
+		function createMessage(messageText, isNew = false, href) {
+			if (messageText) {
+				var messageTemplate = document.querySelector("#message-template");
+				var instance = messageTemplate.content.cloneNode(true);
+				var text = document.createTextNode(messageText);
+				var message = instance.querySelector("#message");
+				message.appendChild(text);
+				feed.appendChild(instance);
+				isNew && message.classList.add("highlight");
+				if (href) {
+					text.textContent += " ";
+					var link = document.createElement("a");
+					link.href = href;
+					link.innerHTML = href;
+					message.appendChild(link);
+				}
+			}
+		}
+
+		function sendMessage() {
+			var input = document.querySelector("#create-message-input").value;
+			createMessage(input, true);
+		}
+
+		function inputKeyDown(el) {
+			if (event.key === "Enter") {
+				createMessage(el.value, true);
+			}
+		}
+	</script>
+</body>
+</html>
