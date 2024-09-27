@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<p>
+		Play sound using Audio element.
+	</p>
+
+	<audio src="Randomize.mp3" id="source1"></audio>
+
+	<button id="button1">Play sound effect</button>
+
+	<p>
+		Play sound using AudioContext API.
+	</p>
+
+	<audio src="Randomize.mp3" id="source2"></audio>
+
+	<button id="button2">Play sound effect</button>
+
+	<p>
+		<a href="https://stackoverflow.com/a/78172579/13157180">
+			stackoverflow - playing audio without interrupting music player on mobile
+		</a>
+	</p>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+
+			// play audio 1
+
+			document.querySelector("#button1").addEventListener("click", () => {
+				document.querySelector("#source1").play();
+			});
+
+			// play audio 2
+
+			const audioContext = new AudioContext();
+			const audioElement = document.querySelector("#source2");
+			const playButton = document.querySelector("#button2");
+			const track = audioContext.createMediaElementSource(audioElement);
+			track.connect(audioContext.destination);
+
+			playButton.addEventListener("click", () => {
+				// Check if context is in suspended state (autoplay policy)
+				if (audioContext.state === "suspended") {
+					audioContext.resume();
+				}
+
+				if (audioElement.paused) {
+					audioElement.play();
+				}
+			});
+		});
+	</script>
+</body>
+</html>
