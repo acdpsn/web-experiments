@@ -1,46 +1,64 @@
 const fs = require("node:fs");
-const fsp = require("node:fs").promises;
 const jsdom = require("jsdom");
 const prettier = require("prettier");
 
-const folders = fs.readdirSync("experiments/");
-const { JSDOM } = jsdom;
+const main = async () => {
+  const { JSDOM } = jsdom;
+  const allFileData = [];
+  const dunnos = [];
+  const folders = await new Promise((resolve, reject) => {
+    fs.readdir(
+      "experiments/", undefined, (err, subfolders) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve(subfolders);
+      }
+    );
+  });
 
-var pages = [];
+  for (const folder of folders) {
+    const fileData = await new Promise((resolve, reject) => {
+      fs.readFile(`experiments/${ folder }/index.html`, "utf8", (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve({ folder, data });
+      });
+    });
 
-folders.forEach((sub) => {
-  fs.readFile(`experiments/${ sub }/index.html`, "utf8", async (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+    allFileData.push(fileData);
+  }
 
-    const dom = new JSDOM(data);
+  for (const fileData of allFileData) {
+    const dom = new JSDOM(fileData.data);
     const doc = dom.window.document;
     const titleEl = doc.querySelector("title");
 
     if (!titleEl) {
-      console.error(`Page in ${ sub } is missing a title.`);
+      console.error(`Page in ${ fileData.folder } is missing a title.`);
       return;
     }
 
     const title = titleEl.textContent;
-    const genTimeEl = doc.querySelector("meta[name=generated-timestamp]") ?? await createTimestamp(dom, sub);
+    const genTimeEl = doc.querySelector("meta[name=generated-timestamp]") ??
+      await createTimestamp(dom);
 
     const genTime = genTimeEl.getAttribute("content");
-    const page = new Object();
-    page.title = title;
-    page.href = `experiments/${ sub }/index.html`;
-    page.index = genTime;
-    pages.push(page);
-    console.log("title: ", genTime.padStart(13, " "), title);
-  });
-});
+    const dunno = new Object();
+    dunno.title = title;
+    dunno.href = `experiments/${ fileData.folder }/index.html`;
+    dunno.index = genTime;
+    dunnos.push(dunno);
+  }
 
-pages.sort((a, b) => a.index - b.index);
-console.log('pages:', pages)
+  dunnos.sort((a, b) => a.index - b.index).reverse();
+  for (const dunno of dunnos) {
+    console.log("page: ", dunno.index.padStart(13, " "), dunno.title);
+  }
+};
 
-const createTimestamp = async (dom, sub) => {
+const createTimestamp = async (dom) => {
   const doc = dom.window.document;
   const newGenTimeEl = doc.createElement("meta");
   const titleEl = doc.querySelector("title");
@@ -49,20 +67,22 @@ const createTimestamp = async (dom, sub) => {
   titleEl.insertAdjacentElement("afterend", newGenTimeEl);
   const output = await prettier.format(dom.serialize(), { parser: "html" });
 
-  if (!fs.existsSync(`temp`)) {
-    fs.mkdirSync(`temp`);
+  if (!fs.existsSync("temp")) {
+    fs.mkdirSync("temp");
   }
 
-  fs.writeFile(`temp/index.html`, output, (err) => {
+  fs.writeFile("temp/index.html", output, (err) => {
     err && console.error(err);
   });
 
   return doc.querySelector("meta[name=generated-timestamp]");
 }
 
+if (require.main === module) {
+  main();
+}
+
 /* //////// TODO ////////
-use fsp to get list of pages before running sort
-sort list of pages by timestamp
 generate new homepage with list of pages
 create a template for the homepage
 run script on commit with husky
