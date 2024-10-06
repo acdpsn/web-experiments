@@ -5,7 +5,7 @@ const prettier = require("prettier");
 const main = async () => {
   const { JSDOM } = jsdom;
   const allFileData = [];
-  const dunnos = [];
+  const files = [];
   const folders = await new Promise((resolve, reject) => {
     fs.readdir(
       "experiments/", undefined, (err, subfolders) => {
@@ -41,24 +41,25 @@ const main = async () => {
     }
 
     const title = titleEl.textContent;
+    const filePath = `experiments/${ fileData.folder }/index.html`;
     const genTimeEl = doc.querySelector("meta[name=generated-timestamp]") ??
-      await createTimestamp(dom);
+      await createTimestamp(dom, filePath);
 
     const genTime = genTimeEl.getAttribute("content");
-    const dunno = new Object();
-    dunno.title = title;
-    dunno.href = `experiments/${ fileData.folder }/index.html`;
-    dunno.index = genTime;
-    dunnos.push(dunno);
+    const file = new Object();
+    file.title = title;
+    file.href = filePath;
+    file.index = genTime;
+    files.push(file);
   }
 
-  dunnos.sort((a, b) => a.index - b.index).reverse();
-  for (const dunno of dunnos) {
-    console.log("page: ", dunno.index.padStart(13, " "), dunno.title);
+  files.sort((a, b) => a.index - b.index).reverse();
+  for (const file of files) {
+    console.log("page: ", file.index.padStart(13, " "), file.title);
   }
 };
 
-const createTimestamp = async (dom) => {
+const createTimestamp = async (dom, path) => {
   const doc = dom.window.document;
   const newGenTimeEl = doc.createElement("meta");
   const titleEl = doc.querySelector("title");
@@ -71,7 +72,7 @@ const createTimestamp = async (dom) => {
     fs.mkdirSync("temp");
   }
 
-  fs.writeFile("temp/index.html", output, (err) => {
+  fs.writeFile(path, output, (err) => {
     err && console.error(err);
   });
 
@@ -85,6 +86,6 @@ if (require.main === module) {
 /* //////// TODO ////////
 generate new homepage with list of pages
 create a template for the homepage
-run script on commit with husky
+run script before commit with husky
 add typing to variables and function parameters? .ts
 */
