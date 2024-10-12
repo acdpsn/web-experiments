@@ -14,7 +14,7 @@
         margin: 0;
       }
 
-      #feed-container {
+      .feed-container {
         width: calc(100% - 8px);
         height: calc(100% - 54px);
         padding-top: 4px;
@@ -23,7 +23,8 @@
         align-items: center;
         justify-content: center;
       }
-      #feed-list {
+
+      .feed-list {
         width: 100%;
         max-width: 500px;
         height: 100%;
@@ -34,26 +35,31 @@
         scroll-snap-type: y proximity;
         align-content: end;
       }
-      #feed-list::after {
+
+      .feed-list::after {
         height: 1px; /* firefox requires a height */
         display: block;
         content: "";
         scroll-snap-align: end;
       }
-      #message {
+
+      .message {
         padding: 8px;
         margin: 12px;
         border: 1px solid #000;
         border-radius: 8px;
+        overflow-wrap: break-word;
       }
-      #create-message-container {
+
+      .create-message-container {
         height: 50px;
         margin: 0 4px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      #create-message-input {
+
+      .create-message-input {
         font-family: Inter, Roboto, "Helvetica Neue", "Arial Nova",
           "Nimbus Sans", Arial, sans-serif;
         font-size: 16px;
@@ -66,16 +72,24 @@
         box-sizing: border-box;
         flex-shrink: 0;
       }
-      #create-message-input::placeholder {
+
+      .create-message-input::placeholder {
         font-style: italic;
       }
-      #create-message-send {
+
+      .create-message-send {
         width: 60px;
         height: 42px;
         padding: 0;
         margin-left: 4px;
         border: 1px solid #000;
         flex-shrink: 0;
+      }
+
+      .highlight {
+        animation-name: highlight;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
       }
 
       @keyframes highlight {
@@ -86,29 +100,25 @@
           background-color: transparent;
         }
       }
-      .highlight {
-        animation-name: highlight;
-        animation-duration: 2s;
-        animation-iteration-count: 1;
-      }
     </style>
   </head>
   <body>
-    <div id="feed-container">
-      <div id="feed-list">
+    <div class="feed-container">
+      <div class="feed-list" id="feed-list">
         <template id="message-template">
-          <div id="message"></div>
+          <div class="message"></div>
         </template>
       </div>
     </div>
-    <div id="create-message-container">
+    <div class="create-message-container">
       <input
         type="text"
+        class="create-message-input"
         id="create-message-input"
         onkeydown="inputKeyDown(this)"
         placeholder="New message..."
       />
-      <button id="create-message-send" onclick="sendMessage()">Send</button>
+      <button class="create-message-send" onclick="sendMessage()">Send</button>
     </div>
 
     <script>
@@ -123,8 +133,8 @@
 
       createMessage(
         "cool solution from Bramus",
-        false,
-        "https://front-end.social/@bramus/112990110232760267",
+        undefined,
+        "https://front-end.social/@bramus/112990110232760267"
       );
 
       // scroll to bottom of feed
@@ -135,7 +145,7 @@
           var messageTemplate = document.querySelector("#message-template");
           var instance = messageTemplate.content.cloneNode(true);
           var text = document.createTextNode(messageText);
-          var message = instance.querySelector("#message");
+          var message = instance.querySelector("div");
           message.appendChild(text);
           feed.appendChild(instance);
           isNew && message.classList.add("highlight");
