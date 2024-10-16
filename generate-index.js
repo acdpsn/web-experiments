@@ -1,25 +1,22 @@
 const fs = require("node:fs");
 const jsdom = require("jsdom");
-const prettier = require("prettier");
+const { JSDOM } = jsdom;
 
 const main = async () => {
-  const { JSDOM } = jsdom;
   const allFileData = [];
   const files = [];
   const folders = await new Promise((resolve, reject) => {
-    fs.readdir(
-      "experiments/", undefined, (err, subfolders) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve(subfolders);
+    fs.readdir("experiments/", undefined, (err, subfolders) => {
+      if (err) {
+        return reject(err);
       }
-    );
+      resolve(subfolders);
+    });
   });
 
   for (const folder of folders) {
     const fileData = await new Promise((resolve, reject) => {
-      fs.readFile(`experiments/${ folder }/index.html`, "utf8", (err, data) => {
+      fs.readFile(`experiments/${folder}/index.html`, "utf8", (err, data) => {
         if (err) {
           return reject(err);
         }
@@ -36,14 +33,15 @@ const main = async () => {
     const titleEl = doc.querySelector("title");
 
     if (!titleEl) {
-      console.error(`Page in ${ fileData.folder } is missing a title.`);
+      console.error(`Page in ${fileData.folder} is missing a title.`);
       return;
     }
 
     const title = titleEl.textContent;
-    const filePath = `experiments/${ fileData.folder }/index.html`;
-    const genTimeEl = doc.querySelector("meta[name=generated-timestamp]") ??
-      await createTimestamp(dom, filePath);
+    const filePath = `experiments/${fileData.folder}/index.html`;
+    const genTimeEl =
+      doc.querySelector("meta[name=generated-timestamp]") ??
+      (await createTimestamp(dom, filePath));
 
     const genTime = genTimeEl.getAttribute("content");
     const file = new Object();
@@ -53,10 +51,36 @@ const main = async () => {
     files.push(file);
   }
 
-  files.sort((a, b) => a.index - b.index).reverse();
+  files.sort((a, b) => a.index - b.index);
+
+  const template = await new Promise((resolve, reject) => {
+    fs.readFile(`index-template.html`, "utf8", (err, data) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(data);
+    });
+  });
+
+  const dom = new JSDOM(template);
+  const doc = dom.window.document;
+  const titleEl = doc.querySelector("h1");
+
   for (const file of files) {
-    console.log("page: ", file.index.padStart(13, " "), file.title);
+    const anchorEl = doc.createElement("a");
+    const paragraphEl = doc.createElement("p");
+
+    anchorEl.innerHTML = file.title;
+    anchorEl.href = file.href;
+
+    paragraphEl.appendChild(anchorEl);
+    titleEl.insertAdjacentElement("afterend", paragraphEl);
+    titleEl.insertAdjacentHTML("afterend", "\n"); // todo: preserve tabbing after insert
   }
+
+  fs.writeFile("index.html", dom.serialize(), (err) => {
+    err && console.error(err);
+  });
 };
 
 const createTimestamp = async (dom, path) => {
@@ -66,26 +90,15 @@ const createTimestamp = async (dom, path) => {
   newGenTimeEl.setAttribute("name", "generated-timestamp");
   newGenTimeEl.setAttribute("content", Date.now());
   titleEl.insertAdjacentElement("afterend", newGenTimeEl);
-  const output = await prettier.format(dom.serialize(), { parser: "html" });
+  titleEl.insertAdjacentHTML("afterend", "\n"); // todo: preserve tabbing after insert
 
-  if (!fs.existsSync("temp")) {
-    fs.mkdirSync("temp");
-  }
-
-  fs.writeFile(path, output, (err) => {
+  fs.writeFile(path, dom.serialize(), (err) => {
     err && console.error(err);
   });
 
   return doc.querySelector("meta[name=generated-timestamp]");
-}
+};
 
 if (require.main === module) {
   main();
 }
-
-/* //////// TODO ////////
-generate new homepage with list of pages
-create a template for the homepage
-run script before commit with husky
-add typing to variables and function parameters? .ts
-*/
