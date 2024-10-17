@@ -65,6 +65,7 @@ const main = async () => {
   const dom = new JSDOM(template);
   const doc = dom.window.document;
   const titleEl = doc.querySelector("h1");
+  console.log("🚀 ~ main ~ titleEl:", titleEl)
 
   for (const file of files) {
     const anchorEl = doc.createElement("a");
@@ -75,7 +76,7 @@ const main = async () => {
 
     paragraphEl.appendChild(anchorEl);
     titleEl.insertAdjacentElement("afterend", paragraphEl);
-    titleEl.insertAdjacentHTML("afterend", "\n"); // todo: preserve tabbing after insert
+    titleEl.insertAdjacentHTML("afterend", getIndentation(titleEl));
   }
 
   fs.writeFile("index.html", dom.serialize(), (err) => {
@@ -90,7 +91,7 @@ const createTimestamp = async (dom, path) => {
   newGenTimeEl.setAttribute("name", "generated-timestamp");
   newGenTimeEl.setAttribute("content", Date.now());
   titleEl.insertAdjacentElement("afterend", newGenTimeEl);
-  titleEl.insertAdjacentHTML("afterend", "\n"); // todo: preserve tabbing after insert
+  titleEl.insertAdjacentHTML("afterend", getIndentation(titleEl)); // todo: preserve tabbing after insert
 
   fs.writeFile(path, dom.serialize(), (err) => {
     err && console.error(err);
@@ -98,6 +99,14 @@ const createTimestamp = async (dom, path) => {
 
   return doc.querySelector("meta[name=generated-timestamp]");
 };
+
+const getIndentation = (el) => {
+  const prev = el.previousSibling;
+  if (prev && prev.nodeType === 3) {
+    return prev.textContent;
+  }
+  return "\n";
+}
 
 if (require.main === module) {
   main();
