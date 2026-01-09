@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tooltips</title>
+  <meta name="generated-timestamp" content="1767985810552">
+  <style>
+    html, body {
+      height: calc(100% - 16px);
+      margin: 0;
+      background-color: #0017af;
+    }
+
+    body {
+      padding: 8px;
+    }
+
+    p {
+      color: #fff;
+    }
+
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Tooltip container */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 2px dotted #fff;
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #080d1f;
+      color: #fceaff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+
+      /* Position the tooltip text */
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+
+      /* Fade in tooltip */
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    /* Tooltip arrow */
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #080d1f transparent transparent transparent;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    } 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+      </p>
+      <p>
+        Quidem nemo ratione
+          <span class="tooltip">
+            mollitia
+            <span class="tooltiptext">
+              hello world
+            </span>
+          </span>
+        , odio itaque totam explicabo vero consequatur sed earum
+      </p>
+      <p>
+        Porro amet harum
+        <span class="tooltip">
+          ducimus
+          <span class="tooltiptext">
+            This is a long tooltip! Natus tenetur quaerat reprehenderit deleniti ipsa pariatur sequi. Eius similique ipsum consequuntur repellat saepe. Aperiam possimus tenetur eum perspiciatis, aut nam ad?
+          </span>
+        </span>
+        quos deserunt! Rem porro fugiat tenetur.
+      </p>
+    </div>
+  </div>
+
+</body></html>

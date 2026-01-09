@@ -1,2 +1,3 @@
+echo updating index.html...
 node generate-index.js
 git add index.html
